@@ -10,10 +10,41 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var dataList = ["Task1", "Task2"];
-  void addToDataList(String data) {
+  var dataList = [
+    {
+      "id": "1",
+      "title": "Title1",
+      "description": "Description",
+    },
+    {
+      "id": "2",
+      "title": "Title2",
+      "description": "Description",
+
+    },
+    {
+      "id": "3",
+      "title": "Title1",
+      "description": "Description",
+
+    },
+  ];
+  void addToDataList(String data, String desc) {
     setState(() {
-      dataList.add(data);
+      dataList.add({
+        "id": DateTime.now().toString(),
+        "title": data,
+      "description": desc,
+
+      });
+    });
+  }
+
+  void removeFromDataList(String id) {
+    setState(() {
+      dataList.removeWhere((e) {
+        return e['id'] == id;
+      });
     });
   }
 
@@ -26,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return  FormPage(
-                  addToList:addToDataList,
+                return FormPage(
+                  addToList: addToDataList,
                 );
               }));
             },
@@ -40,7 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             ...dataList.map((e) {
               return TaskCard(
-                title: e,
+                // ValueKey GlobalKey
+                key: ValueKey(e["id"]),
+                description: e["description"] ?? "No Title Found",
+                title: e["title"] ?? "No Title Found",
+                deleteData: () {
+                  removeFromDataList(e["id"] ?? "");
+                },
               );
             }),
           ],

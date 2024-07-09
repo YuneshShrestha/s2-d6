@@ -1,10 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:todolist/screens/task_page.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({super.key, required this.title});
+  const TaskCard(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.deleteData});
   final String title;
+  final String description;
+  final Function deleteData;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -29,13 +36,25 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(2),
-      height: 60,
-      color: color,
-      child: ListTile(
-        title: Text(widget.title),
-        trailing: const Icon(Icons.delete),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          return TaskPage(title: widget.title, desc: widget.description);
+        }));
+      },
+      child: Container(
+        margin: const EdgeInsets.all(2),
+        height: 60,
+        color: color,
+        child: ListTile(
+          title: Text(widget.title),
+          subtitle: Text(widget.description),
+          trailing: IconButton(
+              onPressed: () {
+                widget.deleteData();
+              },
+              icon: const Icon(Icons.delete)),
+        ),
       ),
     );
   }

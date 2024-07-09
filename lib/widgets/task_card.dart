@@ -3,8 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({super.key, required this.title});
+  const TaskCard(
+      {super.key,
+      required this.title,
+      required this.deleteFunction,
+      required this.id});
   final String title;
+  final String id;
+  final Function deleteFunction;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -30,12 +36,18 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+  
       margin: const EdgeInsets.all(2),
       height: 60,
       color: color,
       child: ListTile(
+        
         title: Text(widget.title),
-        trailing: const Icon(Icons.delete),
+        trailing: IconButton(
+            onPressed: () {
+              widget.deleteFunction(widget.id);
+            },
+            icon: const Icon(Icons.delete)),
       ),
     );
   }

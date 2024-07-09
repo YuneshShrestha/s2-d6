@@ -10,10 +10,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var dataList = ["Task1", "Task2"];
-  void addToDataList(String data) {
+  var dataList = [
+    {"id": "1", "title": "Title 1"}
+  ];
+  void addToDataList(String title) {
     setState(() {
-      dataList.add(data);
+      dataList.add({
+        "id": DateTime.now().toString(),
+        "title": title,
+      });
+    });
+  }
+
+  void deleteItem(String id) {
+    setState(() {
+      dataList.removeWhere((e) {
+        return e["id"] == id;
+      });
     });
   }
 
@@ -26,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return  FormPage(
-                  addToList:addToDataList,
+                return FormPage(
+                  addToList: addToDataList,
                 );
               }));
             },
@@ -40,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             ...dataList.map((e) {
               return TaskCard(
-                title: e,
+                key: ValueKey(e["id"]),
+                id: e["id"] ?? "",
+                title: e["title"] ?? "No Title",
+                deleteFunction: deleteItem,
               );
             }),
           ],

@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:todolist/screens/task_page.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard(
-      {super.key,
-      required this.title,
-      required this.description,
-      required this.deleteData});
+  const TaskCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.deleteData,
+    required this.addToImpList,
+  });
   final String title;
   final String description;
   final Function deleteData;
+  final Function addToImpList;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -49,11 +52,25 @@ class _TaskCardState extends State<TaskCard> {
         child: ListTile(
           title: Text(widget.title),
           subtitle: Text(widget.description),
-          trailing: IconButton(
-              onPressed: () {
-                widget.deleteData();
-              },
-              icon: const Icon(Icons.delete)),
+          trailing: SizedBox(
+            width: 100,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    widget.addToImpList();
+                  },
+                  icon: const Icon(Icons.star),
+                ),
+                IconButton(
+                  onPressed: () {
+                    widget.deleteData();
+                  },
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

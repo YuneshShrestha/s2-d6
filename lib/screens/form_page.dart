@@ -10,7 +10,12 @@ class FormPage extends StatelessWidget {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Form Page"),
+        title: Text(
+          "Form Page",
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                color: Colors.blue,
+              ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

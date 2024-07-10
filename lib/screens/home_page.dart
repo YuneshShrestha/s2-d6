@@ -20,13 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
       "id": "2",
       "title": "Title2",
       "description": "Description",
-
     },
     {
       "id": "3",
       "title": "Title1",
       "description": "Description",
-
     },
   ];
   void addToDataList(String data, String desc) {
@@ -34,8 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       dataList.add({
         "id": DateTime.now().toString(),
         "title": data,
-      "description": desc,
-
+        "description": desc,
       });
     });
   }
@@ -52,7 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Todo App"),
+        title: Text(
+          "Todo App",
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: const Icon(Icons.add),
           ),
+          Switch(value: true, onChanged: null)
         ],
       ),
       body: SingleChildScrollView(

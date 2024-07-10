@@ -20,15 +20,15 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   late Color color;
   List<Color> colorsList = [
-    Colors.black54,
-    Colors.yellow,
-    Colors.pinkAccent,
-    Colors.orangeAccent
+    Colors.black54, //0
+    Colors.yellow, //1
+    Colors.pinkAccent,//2
+    Colors.orangeAccent//3
   ];
   @override
   void initState() {
     // Random Index
-    // 0 - 2
+    // 0 - 3
     var randomIndex = Random().nextInt(colorsList.length);
     color = colorsList[randomIndex];
     super.initState();
@@ -43,6 +43,7 @@ class _TaskCardState extends State<TaskCard> {
         }));
       },
       child: Container(
+        
         margin: const EdgeInsets.all(2),
         height: 60,
         color: color,

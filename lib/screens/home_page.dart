@@ -1,10 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todolist/main.dart';
 import 'package:todolist/screens/form_page.dart';
 import 'package:todolist/widgets/task_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({super.key, required this.changeTheme});
+  final Function changeTheme;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -45,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  bool toggleSwitch = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +70,23 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: const Icon(Icons.add),
           ),
-          Switch(value: true, onChanged: null)
+          Platform.isIOS
+              ? CupertinoSwitch(
+                  value: toggleSwitch,
+                  onChanged: (val) {
+                    MyApp.of(context).changeBrightness();
+                    setState(() {
+                      toggleSwitch = val;
+                    });
+                  })
+              : Switch(
+                  value: toggleSwitch,
+                  onChanged: (val) {
+                    MyApp.of(context).changeBrightness();
+                    setState(() {
+                      toggleSwitch = val;
+                    });
+                  })
         ],
       ),
       body: SingleChildScrollView(

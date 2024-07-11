@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FormPage extends StatelessWidget {
@@ -26,6 +29,8 @@ class FormPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Text field
+              _createAdaptiveTextField(),
               // Text field
               // Title
               const Text("Title"),
@@ -83,5 +88,30 @@ class FormPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _createAdaptiveTextField() {
+    final _border = OutlineInputBorder(
+      borderSide: BorderSide(color: CupertinoColors.lightBackgroundGray),
+    );
+
+    final iOSDecoration = InputDecoration(
+      border: _border,
+      enabledBorder: _border,
+      focusedBorder: _border,
+      filled: true,
+      fillColor: CupertinoColors.white,
+      hoverColor: CupertinoColors.white,
+      contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+    );
+
+    return !Platform.isIOS
+        ? SizedBox(
+            height: 36.0,
+            child: TextField(
+              decoration: iOSDecoration,
+            ),
+          )
+        : TextField();
   }
 }

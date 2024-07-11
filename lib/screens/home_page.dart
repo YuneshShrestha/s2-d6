@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/screens/form_page.dart';
 import 'package:todolist/widgets/task_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.function});
+  final Function function;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "description": "Description",
     },
   ];
+  bool isTrue = false;
   void addToDataList(String data, String desc) {
     setState(() {
       dataList.add({
@@ -64,7 +69,14 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: const Icon(Icons.add),
           ),
-          Switch(value: true, onChanged: null)
+          Switch.adaptive(
+              value: isTrue,
+              onChanged: (val) {
+                widget.function();
+                setState(() {
+                  isTrue = val;
+                });
+              })
         ],
       ),
       body: SingleChildScrollView(
@@ -83,6 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
       ),
     );
   }

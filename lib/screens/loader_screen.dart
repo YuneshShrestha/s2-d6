@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:todolist/screens/home_page.dart';
 
 class LoaderScreen extends StatefulWidget {
-  const LoaderScreen({super.key});
+  const LoaderScreen({super.key, required this.function});
+  final Function function;
 
   @override
   State<LoaderScreen> createState() => _LoaderScreenState();
@@ -15,8 +16,11 @@ class _LoaderScreenState extends State<LoaderScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-        return const HomeScreen();
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return HomeScreen(
+          function: widget.function,
+        );
       }));
     });
   }
@@ -24,8 +28,10 @@ class _LoaderScreenState extends State<LoaderScreen> {
   @override
   Widget build(BuildContext context) {
     var appBar = AppBar(
-      title:  Text("Loader Screen", style: Theme.of(context).textTheme.displayLarge,),
-
+      title: Text(
+        "Loader Screen",
+        style: Theme.of(context).textTheme.displayLarge,
+      ),
     );
     var needHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
